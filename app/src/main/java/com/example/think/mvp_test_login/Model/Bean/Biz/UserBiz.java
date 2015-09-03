@@ -9,9 +9,8 @@ import com.example.think.mvp_test_login.Model.Bean.User;
  * login就负责在presenter中与view进行数据交互。
  */
 public class UserBiz implements IUserBiz{
+
     User user = new User();
-
-
 
     @Override
     public void login(final String username, final String  userpassword, final ILoginListener listener) {
@@ -36,6 +35,7 @@ public class UserBiz implements IUserBiz{
                         listener.loginSuccess(username);
                     }else {
                         listener.loginFailed();
+
                     }
 
                 }catch (Exception e){

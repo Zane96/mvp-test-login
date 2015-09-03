@@ -1,8 +1,8 @@
 package com.example.think.mvp_test_login.Presenter;
 
+import android.content.Intent;
 import android.os.Handler;
 
-import com.example.think.mvp_test_login.MainActivity;
 import com.example.think.mvp_test_login.Model.Bean.Biz.ILoginListener;
 import com.example.think.mvp_test_login.Model.Bean.Biz.IUserBiz;
 import com.example.think.mvp_test_login.Model.Bean.Biz.UserBiz;
@@ -39,23 +39,17 @@ public class ILoginPresenter {
                 new ILoginListener() {
                     @Override
                     public void loginSuccess(final String username) {
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                iLoginView.toMainActivity(username);
-                                iLoginView.hideLoading();
-                            }
+                        handler.post(() -> {
+                            iLoginView.hideLoading();
+                            iLoginView.toListviewActivity();
                         });
                     }
 
                     @Override
                     public void loginFailed() {
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                iLoginView.showFailedError();
-                                iLoginView.hideLoading();
-                            }
+                        handler.post(() -> {
+                            iLoginView.showFailedError();
+                            iLoginView.hideLoading();
                         });
                     }
                 });

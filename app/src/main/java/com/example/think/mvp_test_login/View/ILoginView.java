@@ -28,6 +28,6 @@ public interface ILoginView {
     /**
      * do something when I have a response
      */
-    void toMainActivity(String username);
+    void toListviewActivity();
     void showFailedError();
 }

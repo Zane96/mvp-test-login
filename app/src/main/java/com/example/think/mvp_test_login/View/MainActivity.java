@@ -1,5 +1,6 @@
-package com.example.think.mvp_test_login;
+package com.example.think.mvp_test_login.View;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,54 +9,47 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.example.think.mvp_test_login.Presenter.ILoginPresenter;
-import com.example.think.mvp_test_login.View.ILoginView;
+import com.example.think.mvp_test_login.R;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * activity在这里只是view，业务逻辑全部抽出去到presenter
  */
 public class MainActivity extends ActionBarActivity implements ILoginView{
 
-    private EditText userName, passWord;
+    @Bind(R.id.account)
+    EditText userName;
+    @Bind(R.id.password)
+    EditText passWord;
 
-    private Button login, clear;
+    @Bind(R.id.button_login)
+    Button login;
+    @Bind(R.id.button_clear)
+    Button clear;
 
-    private ProgressBar progressBar;
+    @Bind(R.id.progressbar)
+    ProgressBar progressBar;
 
     private ILoginPresenter presenter = new ILoginPresenter(this);
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        ButterKnife.bind(this);
         initView();
     }
 
     /**
-     * view还负责初始化组件
+     *
      */
     private void initView() {
 
-        userName = (EditText)findViewById(R.id.account);
-        passWord = (EditText)findViewById(R.id.password);
-        login = (Button)findViewById(R.id.button_login);
-        clear = (Button)findViewById(R.id.button_clear);
-        progressBar = (ProgressBar)findViewById(R.id.progressbar);
+        login.setOnClickListener(v -> presenter.login());
 
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.login();
-            }
-        });
-
-        clear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.clear();
-            }
-        });
+        clear.setOnClickListener(v -> presenter.clear());
     }
 
     /**
@@ -94,9 +88,8 @@ public class MainActivity extends ActionBarActivity implements ILoginView{
     }
 
     @Override
-    public void toMainActivity(String username) {
-        Toast.makeText(MainActivity.this, username+" login success",
-                Toast.LENGTH_LONG).show();
+    public void toListviewActivity() {
+        startActivity(new Intent(MainActivity.this, ListViewActivity.class));
     }
 
     @Override
